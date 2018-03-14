@@ -1,4 +1,4 @@
-package de.akquinet.playground.appfunctor;
+package de.akquinet.playground.optionalvalues;
 
 import io.vavr.control.Option;
 import org.junit.jupiter.api.Test;

@@ -1,24 +1,21 @@
-package de.akquinet.playground.appfunctor;
+package de.akquinet.playground.optionalvalues;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
-import java.util.function.BiFunction;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-class ReadParametersTest {
+import static de.akquinet.playground.optionalvalues.ReadParameters.readFloatParameterUsingValidation;
+import static io.vavr.control.Validation.valid;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    private BiFunction<String, Map<String, Set<String>>, Optional<Float>> readFloatParameter;
-
-    @BeforeEach
-    void setFunction() {
-        readFloatParameter = ReadParameters::readFloatParameterusingIfs;
-    }
-
+class ReadParametersUsingValidationTest {
     @Test
     void readFloatParameterusingIfsOnEmptyMap() {
-        Assertions.assertEquals(Optional.empty(),readFloatParameter.apply("p",Collections.emptyMap()));
+        assertTrue(readFloatParameterUsingValidation("p", Collections.emptyMap()).isInvalid());
     }
 
     @Test
@@ -28,17 +25,17 @@ class ReadParametersTest {
         values.add("3.14");
         final String key = "key";
         paras.put(key, values);
-        Assertions.assertEquals(Optional.of(3.14f),readFloatParameter.apply(key,paras));
+        assertEquals(valid(3.14f), readFloatParameterUsingValidation(key,paras));
     }
 
     @Test
-    void readFloatParameterusingIfsOnMapWithOneInCorrectValue() {
+    void readFloatParameterusingIfsOnMapWithOneIncorrectValue() {
         final HashMap<String, Set<String>> paras = new HashMap<>();
         final HashSet<String> values = new HashSet<>();
         values.add("xyz");
         final String key = "key";
         paras.put(key, values);
-        Assertions.assertEquals(Optional.empty(),readFloatParameter.apply(key,paras));
+        assertTrue(readFloatParameterUsingValidation(key,paras).isInvalid());
     }
 
     @Test
@@ -49,7 +46,7 @@ class ReadParametersTest {
         values.add("xyz");
         final String key = "key";
         paras.put(key, values);
-        Assertions.assertEquals(Optional.empty(),readFloatParameter.apply(key,paras));
+        assertTrue(readFloatParameterUsingValidation(key, paras).isInvalid());
     }
 
     @Test
@@ -58,6 +55,6 @@ class ReadParametersTest {
         final Set<String> values = Collections.emptySet();
         final String key = "key";
         paras.put(key, values);
-        Assertions.assertEquals(Optional.empty(),readFloatParameter.apply(key,paras));
+        assertTrue(readFloatParameterUsingValidation(key,paras).isInvalid());
     }
 }
