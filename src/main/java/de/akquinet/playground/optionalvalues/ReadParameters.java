@@ -51,15 +51,12 @@ public class ReadParameters {
 
     static Validation<String, Float> readFloatParameterUsingValidation(
             String parameterName, Map<String, Set<String>> parameters) {
-        final Option<Set<String>> valuesOpt = Option.of(parameters.get(parameterName));
-        final Validation<String, Set<String>> checkExistantV = valuesOpt.toValid("Value is not set");
-        final Validation<String, String> checkUniqueV = checkExistantV.flatMap(
-                strings -> strings.size() == 1
+        return Option.of(parameters.get(parameterName))
+                .toValid("Value is not set")
+                .flatMap(strings -> strings.size() == 1
                         ? Validation.valid(strings.iterator().next())
-                        : Validation.invalid("Parameter is set several times"));
-        final Validation<String, Float> floatV = checkUniqueV.flatMap(s ->
-                Try.of(() -> Float.parseFloat(s)).toValid("The parameter is not a valid String"));
-
-        return floatV;
+                        : Validation.invalid("Parameter is set several times"))
+                .flatMap(s -> Try.of(() -> Float.parseFloat(s))
+                        .toValid("The parameter is not a valid String"));
     }
 }
