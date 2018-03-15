@@ -52,7 +52,7 @@ public class ReadParameters {
     static Validation<String, Float> readFloatParameterUsingValidation(
             String parameterName, Map<String, Set<String>> parameters) {
         return Option.of(parameters.get(parameterName))
-                .toValid("Value is not set")
+                .toValid("Parameter is not set")
                 .flatMap(strings -> strings.size() == 1
                         ? Validation.valid(strings.iterator().next())
                         : Validation.invalid("Parameter is set several times"))
