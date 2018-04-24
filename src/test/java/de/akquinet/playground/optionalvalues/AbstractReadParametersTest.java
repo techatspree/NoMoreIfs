@@ -6,12 +6,13 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 import java.util.function.BiFunction;
 
+import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 abstract class AbstractReadParametersTest {
     @Test
     void readFloatParameterusingIfsOnEmptyMap() {
-        assertEquals(Optional.empty(), getReadFloatParameter().apply("p", Collections.emptyMap()));
+        assertEquals(empty(), getReadFloatParameter().apply("p", Collections.emptyMap()));
     }
 
     @Test
@@ -31,7 +32,7 @@ abstract class AbstractReadParametersTest {
         values.add("xyz");
         final String key = "key";
         paras.put(key, values);
-        assertEquals(Optional.empty(), getReadFloatParameter().apply(key,paras));
+        assertEquals(empty(), getReadFloatParameter().apply(key,paras));
     }
 
     @Test
@@ -42,7 +43,7 @@ abstract class AbstractReadParametersTest {
         values.add("xyz");
         final String key = "key";
         paras.put(key, values);
-        assertEquals(Optional.empty(), getReadFloatParameter().apply(key,paras));
+        assertEquals(empty(), getReadFloatParameter().apply(key,paras));
     }
 
     @Test
@@ -51,7 +52,7 @@ abstract class AbstractReadParametersTest {
         final Set<String> values = Collections.emptySet();
         final String key = "key";
         paras.put(key, values);
-        assertEquals(Optional.empty(), getReadFloatParameter().apply(key,paras));
+        assertEquals(empty(), getReadFloatParameter().apply(key,paras));
     }
 
     abstract BiFunction<String, Map<String, Set<String>>, Optional<Float>> getReadFloatParameter();
