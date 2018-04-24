@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 import java.util.function.BiFunction;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 abstract class AbstractReadParametersTest {
     @Test
     void readFloatParameterusingIfsOnEmptyMap() {
-        Assertions.assertEquals(Optional.empty(), getReadFloatParameter().apply("p", Collections.emptyMap()));
+        assertEquals(Optional.empty(), getReadFloatParameter().apply("p", Collections.emptyMap()));
     }
 
     @Test
@@ -19,7 +21,7 @@ abstract class AbstractReadParametersTest {
         values.add("3.14");
         final String key = "key";
         paras.put(key, values);
-        Assertions.assertEquals(Optional.of(3.14f), getReadFloatParameter().apply(key,paras));
+        assertEquals(Optional.of(3.14f), getReadFloatParameter().apply(key,paras));
     }
 
     @Test
@@ -29,7 +31,7 @@ abstract class AbstractReadParametersTest {
         values.add("xyz");
         final String key = "key";
         paras.put(key, values);
-        Assertions.assertEquals(Optional.empty(), getReadFloatParameter().apply(key,paras));
+        assertEquals(Optional.empty(), getReadFloatParameter().apply(key,paras));
     }
 
     @Test
@@ -40,7 +42,7 @@ abstract class AbstractReadParametersTest {
         values.add("xyz");
         final String key = "key";
         paras.put(key, values);
-        Assertions.assertEquals(Optional.empty(), getReadFloatParameter().apply(key,paras));
+        assertEquals(Optional.empty(), getReadFloatParameter().apply(key,paras));
     }
 
     @Test
@@ -49,7 +51,7 @@ abstract class AbstractReadParametersTest {
         final Set<String> values = Collections.emptySet();
         final String key = "key";
         paras.put(key, values);
-        Assertions.assertEquals(Optional.empty(), getReadFloatParameter().apply(key,paras));
+        assertEquals(Optional.empty(), getReadFloatParameter().apply(key,paras));
     }
 
     abstract BiFunction<String, Map<String, Set<String>>, Optional<Float>> getReadFloatParameter();
